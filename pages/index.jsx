@@ -40,6 +40,10 @@ function index() {
     console.log(word, category)
     console.log(wordLetters)
 
+    setPickedWord(word);
+    setPickedCategory(category);
+    setLetters(letters)
+
     setGameStage(stages[1].name);
     
   };
