@@ -1,19 +1,31 @@
 import React from "react";
+import { Home } from "./Home";
+import Game from "./Game";
+import GameOver from "./GameOver";
+import { useCallback, useEffect, useState } from "react";
+import { wordsList } from "../src/data/words";
 
-const index = () => {
+const stages = [
+  { id: 1, name: "start" },
+  { id: 2, name: "game" },
+  { id: 3, name: "end" },
+];
+
+function index() {
+  const [gameStage, setGameStage] = useState(stages[0].name);
+  const [words] = useState(wordsList);
+
+  const startGame = () => {
+    setGameStage(stages[1].name);
+  };
+
   return (
-    <div className="h-full w-full  flex justify-center mt-64">
-      <div className="bg-project-yelllow h-ful w-fit flex flex-col text-center p-10 rounded-lg md:scale-150">
-        <div className="text-5xl font-bold "> Secret Word</div>
-        <div className="pt-6 text-lg border-b-2 font-light">
-          Um jogo de adivinhar palavras
-        </div>
-        <button className="bg-project-nautilus mt-10 rounded-full w-full text-2xl border-2 outline-1 ">
-          Começar partida
-        </button>
-      </div>
+    <div>
+      {gameStage === "start" && <Home startGame={startGame} />}
+      {gameStage === "game" && <Game />}
+      {gameStage === "end" && <GameOver />}
     </div>
   );
-};
+}
 
 export default index;
