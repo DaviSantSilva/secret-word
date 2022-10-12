@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
 
-const Game = () => {
+const Game = ({ verifyLetter }) => {
   return (
-    <div className='game'>Game</div>
-  )
-}
+    <div className="game">
+      <div> Game</div>
+      <button onClick={verifyLetter}>Finalizar</button>
+    </div>
+  );
+};
 
-export default Game
+export default Game;
