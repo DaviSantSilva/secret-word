@@ -1,18 +1,7 @@
 import React from "react";
 import { useState, useRef } from "react";
 
-
-const Game = ({
-  verifyLetter,
-  pickedCategory,
-  pickedWord,
-  letters,
-  guessedLetters,
-  wrongLetters,
-  guesses,
-  score,
-}) => {
-
+const Game = ({ verifyLetter, pickedCategory, gameState, guesses, score }) => {
   const [letter, setLetter] = useState("");
   const letterInputRef = useRef(null);
 
@@ -23,7 +12,7 @@ const Game = ({
 
     setLetter("");
 
-    letterInputRef.current.focus()
+    letterInputRef.current.focus();
   };
 
   return (
@@ -32,14 +21,16 @@ const Game = ({
         <div className="bg-red-600 w-full flex justify-center text-5xl ">
           Adivinhe a palavra
         </div>
-        <div className="bg-pink-600 flex justify-center pt-2 text-xl">{score} Pontos</div>
+        <div className="bg-pink-600 flex justify-center pt-2 text-xl">
+          {score} Pontos
+        </div>
         <div className="bg-green-600 flex justify-center pt-14 text-4xl">
           <div>Dica-</div>
           <div className="font-bold ml-1">{pickedCategory}</div>
         </div>
         <div className="bg-orange-600 flex justify-center pt-10 text-xl">
-          {letters.map((letter, i) =>
-            guessedLetters.includes(letter) ? (
+          {gameState.letters.map(({ letter, isGuessed }) =>
+            isGuessed ? (
               <div className="p-2">{letter}</div>
             ) : (
               <div className="p-2">_</div>
@@ -48,7 +39,7 @@ const Game = ({
         </div>
         <div className="flex justify-center bg-purple-700">
           {" "}
-          você ainda tem {guesses} tentativas{" "}
+          você ainda tem {gameState.rules.maxTries} tentativas{" "}
         </div>
         <div className="bg-blue-500 flex justify-center pt-10 text-xl font-semibold">
           {" "}
@@ -71,7 +62,7 @@ const Game = ({
               ref={letterInputRef}
             />
             <button
-              onClick={verifyLetter}
+              type="submit"
               className="bg-project-nautilus mt-10 rounded-full w-1/2 ml-12  text-2xl border-2 outline-1 hover:bg-project-green"
             >
               Revelar
@@ -81,8 +72,10 @@ const Game = ({
         <div className="bg-green-600 flex justify-center text-xl">
           <div>Letras utilizadas - </div>
           <div className="font-bold ml-2 flex">
-            {wrongLetters.map((letter, i) => (
-              <div key={i} className='mr-1' >{letter},</div>
+            {gameState.tries.map(({ letter }) => (
+              <div key={`used_letter_${letter}`} className="mr-1">
+                {letter},
+              </div>
             ))}
           </div>
         </div>

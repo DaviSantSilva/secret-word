@@ -11,16 +11,18 @@ const stages = [
   { id: 3, name: "end" },
 ];
 
-function index() {
+function Index() {
   const [gameStage, setGameStage] = useState(stages[0].name);
   const [words] = useState(wordsList);
   const [pickedWord, setPickedWord] = useState("");
   const [pickedCategory, setPickedCategory] = useState("");
   const [letters, setLetters] = useState([]);
-  const [guessedLetters, setGuessedLetters] = useState([]);
-  const [wrongLetters, setWrongLetters] = useState([]);
-  const [guesses, setGuesses] = useState(3);
   const [score, setScore] = useState(0);
+  const [gameState, setGameState] = useState({
+    letters: [{ letter: "b", isGuessed: true }],
+    tries: [{ letter: "b", isCorrect: true }],
+    rules: { maxTries: 3 },
+  });
 
   const chooseWord = () => {
     const categories = Object.keys(words);
@@ -34,30 +36,42 @@ function index() {
     return { word, category };
   };
 
+  const getMaxTries = (word) => {
+    return Math.ceil(word.length / 2);
+  };
+
   const startGame = () => {
     const { word, category } = chooseWord();
 
-    let wordLetters = word.split("");
+    const maxTries = getMaxTries(word);
 
-    wordLetters = wordLetters.map((l) => l.toLowerCase());
+    const letters = word.split("").map((letter) => {
+      return {
+        letter,
+        isGuessed: false,
+      };
+    });
 
-    console.log(word, category);
-    console.log(wordLetters);
+    const tries = [];
+    setGameState({
+      letters,
+      tries,
+      rules: { maxTries },
+    });
+    console.debug(word, category, letters, gameState);
 
     setPickedWord(word);
     setPickedCategory(category);
-    setLetters(wordLetters);
 
     setGameStage(stages[1].name);
 
-    console.log("aquiii!")
+    console.debug("start game");
   };
 
-  const verifyLetter = (letter) =>{
+  const verifyLetter = (letter) => {
+    guessedLetters(setLetters);
 
-    
-
-    console.log("agora aquii")
+    console.debug("veryfied letters");
   };
 
   const retry = () => {
@@ -73,10 +87,8 @@ function index() {
           pickedWord={pickedWord}
           pickedCategory={pickedCategory}
           letters={letters}
-          guessedLetters={guessedLetters}
-          wrongLetters={wrongLetters}
-          guesses={guesses}
           score={score}
+          gameState={gameState}
         />
       )}
       {gameStage === "end" && <GameOver retry={retry} />}
@@ -84,4 +96,4 @@ function index() {
   );
 }
 
-export default index;
+export default Index;
