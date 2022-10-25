@@ -3,7 +3,7 @@ import { Home } from "./Home";
 import Game from "./Game";
 import GameOver from "./GameOver";
 import { useCallback, useEffect, useState } from "react";
-import { wordsList } from "../src/data/words";
+import { wordsList } from "../src/data/words.js";
 
 const stages = [
   { id: 1, name: "start" },
@@ -49,34 +49,16 @@ function index() {
     setLetters(wordLetters);
 
     setGameStage(stages[1].name);
+
+    console.log("aquiii!")
   };
 
-  const verifyLetter = (letter) => {
-    const normalizedLetter = letter.toLowerCase();
+  const verifyLetter = (letter) =>{
 
-    if (
-      guessedLetters.includes(normalizedLetter) ||
-      wrongLetters.includes(normalizedLetter)
-    ) {
-      return;
-    }
+    
 
-    if (letters.includes(normalizedLetter)) {
-      setGuessedLetters((actualGuessedLetters) => [
-        ...actualGuessedLetters,
-        letter,
-      ]);
-    } else {
-      setWrongLetters((actualWrongLetters) => [
-        ...actualWrongLetters,
-        normalizedLetter,
-      ]);
-
-      setGuesses((actualGuesses) => actualGuesses - 1);
-    }
+    console.log("agora aquii")
   };
-
-  console.log(wrongLetters);
 
   const retry = () => {
     setGameStage(stages[0].name);

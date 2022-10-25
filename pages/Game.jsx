@@ -32,7 +32,7 @@ const Game = ({
         <div className="bg-red-600 w-full flex justify-center text-5xl ">
           Adivinhe a palavra
         </div>
-        <div className="bg-pink-600 flex justify-center">{score} Pontos</div>
+        <div className="bg-pink-600 flex justify-center pt-2 text-xl">{score} Pontos</div>
         <div className="bg-green-600 flex justify-center pt-14 text-4xl">
           <div>Dica-</div>
           <div className="font-bold ml-1">{pickedCategory}</div>
@@ -66,7 +66,7 @@ const Game = ({
               maxLength="1"
               required
               className="w-10 flex ml-20 "
-              onChange={(e) => setLetter(e.target.value)}
+              onChange={(e) => setLetter(e.target.value.toLocaleLowerCase())}
               value={letter}
               ref={letterInputRef}
             />
